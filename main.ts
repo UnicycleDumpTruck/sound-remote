@@ -13,6 +13,7 @@ input.onButtonPressed(Button.B, function () {
 })
 let text_list: string[] = []
 radio.setGroup(1)
+// Lampoon's Christmas Vacation
 text_list = ["Sap", "Dump", "Cars", "Gift", "Tree", "Line", "Full", "Wet"]
 basic.forever(function () {
 	
