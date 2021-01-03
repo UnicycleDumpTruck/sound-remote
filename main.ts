@@ -1,20 +1,40 @@
-function show_and_send (num: number) {
-    radio.sendNumber(num + 10)
-    basic.showString("" + (text_list[num]))
+radio.onReceivedNumber(function (receivedNumber) {
+    if (receivedNumber == current_sound && need_ack) {
+        need_ack = false
+    }
+})
+function send_ack_show () {
+    need_ack = true
+    for (let index = 0; index < 4; index++) {
+        radio.sendNumber(current_sound + 60)
+        basic.pause(200)
+        if (!(need_ack)) {
+            basic.showString("" + (text_list[0]))
+            break;
+        }
+    }
+    current_sound = -1
 }
 input.onButtonPressed(Button.A, function () {
-    show_and_send(randint(0, text_list.length - 1))
+    current_sound = randint(0, text_list.length - 1)
+    send_ack_show()
 })
 input.onButtonPressed(Button.AB, function () {
-    show_and_send(1)
+    current_sound = 1
+    send_ack_show()
 })
 input.onButtonPressed(Button.B, function () {
-    show_and_send(7)
+    current_sound = 0
+    send_ack_show()
 })
 let text_list: string[] = []
+let current_sound = 0
+let need_ack = false
 radio.setGroup(1)
-// Lampoon's Christmas Vacation
-text_list = ["Sap", "Dump", "Cars", "Gift", "Tree", "Line", "Full", "Wet"]
+need_ack = false
+current_sound = -1
+// The Office
+text_list = ["BDay", "Pretzel"]
 basic.forever(function () {
 	
 })
